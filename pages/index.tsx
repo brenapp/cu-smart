@@ -1,82 +1,102 @@
-import Head from 'next/head'
+import { ResponseType, BUILDINGS } from "../models/data";
+import Link from "next/link"
+import { motion } from "framer-motion"
+
+const favorites: ResponseType["XREF"] = [
+  {
+    PointSliceID: 8935,
+    Room: "325",
+    RoomType: "Project Room",
+    BLG: "WATT",
+    Floor: "3rd Floor",
+    ReadingType: "Zone Temp",
+    Alias: "RM 325",
+  },
+  {
+    PointSliceID: 8939,
+    Room: "327",
+    RoomType: "Project Room",
+    BLG: "WATT",
+    Floor: "3rd Floor",
+    ReadingType: "Zone Temp",
+    Alias: "RM 327",
+  },
+  {
+    PointSliceID: 8916,
+    Room: "331",
+    RoomType: "Classroom",
+    BLG: "WATT",
+    Floor: "3rd Floor",
+    ReadingType: "Zone Temp",
+    Alias: "RM 331",
+  },
+  {
+    PointSliceID: 8921,
+    Room: "329",
+    RoomType: "Project Room",
+    BLG: "WATT",
+    Floor: "3rd Floor",
+    ReadingType: "Zone Temp",
+    Alias: "RM 329",
+  },
+];
+
+const popIn = {
+  initial: {
+    opacity: 0,
+    y: 30,
+    scale: 0.75
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+    scale: 1
+  },
+  transition: {
+    type: "spring",
+    stiffness: 260,
+    damping: 20
+  }
+};
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <div className="min-h-screen bg-gray-100">
+      <div className="py-6 px-12 flex flex-col sm:py-12 max-w-3xl m-auto">
+        <h1 className="text-3xl pb-1">Welcome Back!</h1>
+        <h3 className="text-xl text-gray-500">
+          Select a room below to continue
+        </h3>
 
-      <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-        <h1 className="text-6xl font-bold">
-          Welcome to{' '}
-          <a className="text-blue-600" href="https://nextjs.org">
-            Next.js!
-          </a>
-        </h1>
-
-        <p className="mt-3 text-2xl">
-          Get started by editing{' '}
-          <code className="p-3 font-mono text-lg bg-gray-100 rounded-md">
-            pages/index.js
-          </code>
-        </p>
-
-        <div className="flex flex-wrap items-center justify-around max-w-4xl mt-6 sm:w-full">
-          <a
-            href="https://nextjs.org/docs"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Find in-depth information about Next.js features and API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Learn &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Learn about Next.js in an interactive course with quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Examples &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Discover and deploy boilerplate example Next.js projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Deploy &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className="flex items-center justify-center w-full h-24 border-t">
-        <a
-          className="flex items-center justify-center"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="h-4 ml-2" />
-        </a>
-      </footer>
+        <section className="rooms flex flex-col pt-6">
+          {favorites.map((room) => (
+            <Link href={`/room/${room.PointSliceID}`}>
+              <motion.div {...popIn} className="rounded-3xl bg-white shadow-md px-6 py-6 mb-6 flex items-center hover:shadow-xl transition-shadow cursor-pointer">
+                <div className="flex-1">
+                  <h3 className="text-lg">{room.Alias}</h3>
+                  <h5 className="text-base text-gray-500">
+                    {BUILDINGS[room.BLG]}
+                  </h5>
+                </div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 mr-4 text-orange"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
+                </svg>
+              </motion.div>
+            </Link>
+          ))}
+        </section>
+      </div>
     </div>
-  )
+  );
 }
