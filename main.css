@@ -1,0 +1,11 @@
+html, body {
+    --orange: rgb(246, 103, 51);
+};
+
+.text-orange {
+    color: rgb(246, 103, 51)
+};
+
+.bg-orange {
+    color: rgb(246, 103, 51)
+};
