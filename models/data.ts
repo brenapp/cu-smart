@@ -85,7 +85,7 @@ async function fetchAPI<T extends keyof ResponseType>(endpoint: T, parameters: R
 
     try {
 
-        const response = await fetch(`/api/${endpoint}?${queryString}`);
+        const response = await fetch(`http://fmo14.clemson.edu/api/${endpoint}?${queryString}`);
 
         const json: APIResponse<ResponseType[T]> = await response.json();
 
