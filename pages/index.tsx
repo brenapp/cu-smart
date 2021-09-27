@@ -45,6 +45,7 @@ const favorites: ResponseType["XREF"] = [
 export default function Home() {
   return (
     <div className="min-h-screen bg-gray-100">
+      <nav className="w-full h-2 bg-orange"></nav>
       <div className="py-6 px-12 flex flex-col sm:py-12 max-w-3xl m-auto">
         <h1 className="text-3xl pb-1">Welcome Back!</h1>
         <h3 className="text-xl text-gray-500">
@@ -55,6 +56,9 @@ export default function Home() {
           {favorites.map((room) => (
             <Link href={`/room/${room.PointSliceID}`}>
               <motion.div {...popIn} className="rounded-3xl bg-white shadow-md px-6 py-6 mb-6 flex items-center hover:shadow-xl transition-shadow cursor-pointer">
+                <div className="h-12 w-12 bg-gray-500 rounded-lg mr-6 overflow-hidden">
+                  <img src={`/buildings/${room.BLG}.png`} alt={BUILDINGS[room.BLG]} className="h-full rounded-lg" />
+                </div>
                 <div className="flex-1">
                   <h3 className="text-lg">{room.Alias}</h3>
                   <h5 className="text-base text-gray-500">
