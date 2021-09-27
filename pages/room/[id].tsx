@@ -1,9 +1,13 @@
 import { ResponseType, BUILDINGS } from "../../models/data";
 import Link from "next/link";
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
 import { popIn } from "../../animations";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const router = useRouter();
+  const { id } = router.query;
+
   return (
     <div className="min-h-screen bg-gray-100">
       <header className="w-full h-36 rounded-b-3xl bg-orange">
@@ -38,7 +42,10 @@ export default function Home() {
         </section>
       </header>
       <main className="p-6 max-w-5xl m-auto">
-        <motion.div {...popIn} className="bg-white w-full rounded-3xl shadow-sm p-6 flex flex-col">
+        <motion.div
+          {...popIn}
+          className="bg-white w-full rounded-3xl shadow-sm p-6 flex flex-col"
+        >
           <h3 className="text-base font-semibold uppercase">Survey</h3>
           <h5 className="text-gray-500">Question 1 of 3</h5>
           <div className="question flex-1 mt-2 text-gray-600 mb-4">
