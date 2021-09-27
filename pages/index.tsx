@@ -1,6 +1,7 @@
 import { ResponseType, BUILDINGS } from "../models/data";
 import Link from "next/link"
 import { motion } from "framer-motion"
+import { popIn } from "../animations"
 
 const favorites: ResponseType["XREF"] = [
   {
@@ -40,24 +41,6 @@ const favorites: ResponseType["XREF"] = [
     Alias: "RM 329",
   },
 ];
-
-const popIn = {
-  initial: {
-    opacity: 0,
-    y: 30,
-    scale: 0.75
-  },
-  animate: {
-    opacity: 1,
-    y: 0,
-    scale: 1
-  },
-  transition: {
-    type: "spring",
-    stiffness: 260,
-    damping: 20
-  }
-};
 
 export default function Home() {
   return (
