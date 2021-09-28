@@ -1,7 +1,9 @@
 import { ResponseType, BUILDINGS } from "../models/data";
-import Link from "next/link"
-import { motion } from "framer-motion"
-import { popIn } from "../animations"
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { popIn } from "../animations";
+import { useEffect, useState } from "react";
+import PopupID, { getID } from "../components/popup/id";
 
 const favorites: ResponseType["XREF"] = [
   {
@@ -42,22 +44,34 @@ const favorites: ResponseType["XREF"] = [
   },
 ];
 
-export default function Home() {
+export default function Home() { 
+
+  const id = getID();
+
   return (
-    <div className="min-h-screen bg-gray-100">
-      <nav className="w-full h-2 bg-orange"></nav>
+    <div className="min-h-screen bg-gray-100 overflow-x-hidden">
+      { id ? <PopupID /> : null }
+      <nav className="w-full">
+        <div className="accent w-full h-2 bg-orange"></div>
+      </nav>
       <div className="py-6 px-12 flex flex-col sm:py-12 max-w-3xl m-auto">
         <h1 className="text-3xl pb-1">Welcome Back!</h1>
         <h3 className="text-xl text-gray-500">
           Select a room below to continue
         </h3>
-
         <section className="rooms flex flex-col pt-6">
           {favorites.map((room) => (
             <Link href={`/room/${room.PointSliceID}`}>
-              <motion.div {...popIn} className="rounded-3xl bg-white shadow-md px-6 py-6 mb-6 flex items-center hover:shadow-xl transition-shadow cursor-pointer">
+              <motion.div
+                {...(id ? popIn : {})}
+                className="rounded-3xl bg-white shadow-md px-6 py-6 mb-6 flex items-center hover:shadow-xl transition-shadow cursor-pointer"
+              >
                 <div className="h-12 w-12 bg-gray-500 rounded-lg mr-6 overflow-hidden">
-                  <img src={`/buildings/${room.BLG}.png`} alt={BUILDINGS[room.BLG]} className="h-full rounded-lg" />
+                  <img
+                    src={`/buildings/${room.BLG}.png`}
+                    alt={BUILDINGS[room.BLG]}
+                    className="h-full rounded-lg max-w-max"
+                  />
                 </div>
                 <div className="flex-1">
                   <h3 className="text-lg">{room.Alias}</h3>
