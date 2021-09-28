@@ -42,7 +42,10 @@ const mobileSensorData = new mssql.ConnectionPool({
   user: process.env.SHADES_USER,
   password: process.env.SHADES_PASSWORD,
   server: process.env.SHADES_SERVER,
-  database: process.env.SHADES_DATABASE
+  database: process.env.SHADES_DATABASE,
+  options: {
+    trustServerCertificate: true
+  }
 });
 
 mobileSensorData.connect(connectionHandler(1, mobileSensorData, process.env.SHADES_DATABASE, async () => {
@@ -87,7 +90,10 @@ const thermostatData = new mssql.ConnectionPool({
   user: process.env.MSSQL_USER,
   password: process.env.MSSQL_PASSWORD,
   server: process.env.MSSQL_SERVER,
-  database: process.env.MSSQL_DATABASE
+  database: process.env.MSSQL_DATABASE,
+  options: {
+    trustServerCertificate: true
+  }
 });
 
 thermostatData.connect(connectionHandler(1, thermostatData, process.env.MSSQL_DATABASE));
