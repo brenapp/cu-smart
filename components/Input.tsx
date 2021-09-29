@@ -19,12 +19,23 @@ export function Input(props: InputProps) {
 export type ButtonProps = {
   onClick?: () => void;
   text: string;
+  variant?: "primary" | "secondary" | "disabled";
+  className?: string;
 };
 
-export function Button({ text, onClick }: ButtonProps) {
+export function Button({ text, onClick, variant, className }: ButtonProps) {
+
+  const base = "w-32 py-2 ml-auto mt-4 text-center rounded-lg border-box hover:shadow-md transition:all"
+
+  const variants = {
+    primary: "text-white bg-orange active:bg-opacity-50",
+    secondary: "active:bg-opacity-50 border-2 active:border-orange",
+    disabled: "bg-gray-100 bg-gray-100-active:bg-opacity-50 hover:shadow-none cursor-not-allowed",
+  };
+
   return (
     <button
-      className="w-32 py-2 ml-auto mt-4 text-center text-white rounded-lg bg-orange active:bg-opacity-50"
+      className={[variants[variant || "primary"], className, base].join(" ")}
       onClick={onClick}
     >
       {text}

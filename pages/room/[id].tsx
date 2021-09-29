@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { popIn } from "../../animations";
 import { useRouter } from "next/router";
 import PopupID from "../../components/popup/id";
-import { Select } from "../../components/Input";
+import { Button, Select } from "../../components/Input";
 import { useState } from "react";
 
 export default function Home() {
@@ -54,7 +54,7 @@ export default function Home() {
         >
           <h3 className="text-base font-semibold uppercase">Survey</h3>
           <h5 className="text-gray-500">Question 1 of 3</h5>
-          <div className="question flex-1 mt-2 text-gray-600 mb-4">
+          <div className="question flex-1 mt-2 text-gray-600">
             <p className="text-base">This room feels...</p>
             <Select
               options={["Cold", "Cool", "Neutral", "Warm", "Hot"]}
@@ -62,14 +62,8 @@ export default function Home() {
               onSelect={item => setPerception(item)}
               render={(item) => <>{item}</>}
             />
-          </div>
-          <div>
-            <a
-              href="#"
-              className="py-2 px-4 rounded-lg text-white hover:rounded-md transition-all hover:shadow-md"
-            >
-              Next
-            </a>
+            <Button text="Previous" className="mr-2" variant="disabled" />
+            <Button text="Next" />
           </div>
         </motion.div>
       </main>
