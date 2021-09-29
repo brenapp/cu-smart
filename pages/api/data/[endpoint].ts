@@ -48,42 +48,6 @@ const mobileSensorData = new mssql.ConnectionPool({
   }
 });
 
-mobileSensorData.connect(connectionHandler(1, mobileSensorData, process.env.SHADES_DATABASE, async () => {
-  (async function updateSensorData() {
-    console.info("Updating live METRICS...");
-
-    for (const [id, sensor] of mobileMETRICS) {
-
-      const tempQuery = `SELECT TOP 1 * FROM [WFIC_CEVAC_Shades].[dbo].[SensorData]
-                              WHERE (Metric='Temp(F)')
-                              AND (Sensor='${sensor}')
-                              AND (DateTime > DATEADD(HOUR, -1, GETDATE()))
-                              ORDER BY [DATETIME] DESC`;
-
-      const humidityQuery = `SELECT TOP 1 * FROM [WFIC_CEVAC_Shades].[dbo].[SensorData]
-                              WHERE (Metric='Humidity')
-                              AND (Sensor='${sensor}')
-                              AND (DateTime > DATEADD(HOUR, -1, GETDATE()))
-                              ORDER BY [DATETIME] DESC`;
-
-
-      const tempData = await mobileSensorData.query<MobileSensoryEntry>(tempQuery);
-      const humidityData = await mobileSensorData.query<MobileSensoryEntry>(humidityQuery);
-
-      if (tempData.recordset.length > 0) {
-        boxData.set(id, {
-          temp: tempData.recordset[0].Reading,
-          humidity: humidityData.recordset[0].Reading,
-        });
-      }
-
-    }
-
-    setTimeout(updateSensorData, 1000 * 60);
-  })();
-}));
-
-
 /// Thermostat Data, is uploaded to WFIC_CEVAC. This is a fallback in case the box METRICS are not
 /// online
 const thermostatData = new mssql.ConnectionPool({
@@ -96,7 +60,6 @@ const thermostatData = new mssql.ConnectionPool({
   }
 });
 
-thermostatData.connect(connectionHandler(1, thermostatData, process.env.MSSQL_DATABASE));
 
 function connectionHandler(retries: number, pool: ConnectionPool, database: string, after?: () => void) {
   return (err: any) => {
@@ -117,6 +80,63 @@ function connectionHandler(retries: number, pool: ConnectionPool, database: stri
     }
   }
 }
+
+async function ensureConnection() {
+  return new Promise<void>((resolve) => {
+
+    const connected = [false, false];
+    const allConnected = () => connected.every(c => c);
+
+    thermostatData.connect(connectionHandler(1, thermostatData, process.env.MSSQL_DATABASE, () => {
+      connected[0] = true;
+      if (allConnected()) {
+        resolve();
+      };
+    }));
+    mobileSensorData.connect(connectionHandler(1, mobileSensorData, process.env.SHADES_DATABASE, async () => {
+      (async function updateSensorData() {
+        console.info("Updating live METRICS...");
+
+        for (const [id, sensor] of mobileMETRICS) {
+
+          const tempQuery = `SELECT TOP 1 * FROM [WFIC_CEVAC_Shades].[dbo].[SensorData]
+                                  WHERE (Metric='Temp(F)')
+                                  AND (Sensor='${sensor}')
+                                  AND (DateTime > DATEADD(HOUR, -1, GETDATE()))
+                                  ORDER BY [DATETIME] DESC`;
+
+          const humidityQuery = `SELECT TOP 1 * FROM [WFIC_CEVAC_Shades].[dbo].[SensorData]
+                                  WHERE (Metric='Humidity')
+                                  AND (Sensor='${sensor}')
+                                  AND (DateTime > DATEADD(HOUR, -1, GETDATE()))
+                                  ORDER BY [DATETIME] DESC`;
+
+
+          const tempData = await mobileSensorData.query<MobileSensoryEntry>(tempQuery);
+          const humidityData = await mobileSensorData.query<MobileSensoryEntry>(humidityQuery);
+
+          if (tempData.recordset.length > 0) {
+            boxData.set(id, {
+              temp: tempData.recordset[0].Reading,
+              humidity: humidityData.recordset[0].Reading,
+            });
+          }
+
+        }
+
+        connected[0] = false;
+        if (allConnected()) {
+          resolve();
+        };
+
+        setTimeout(updateSensorData, 1000 * 60);
+      })();
+    }));
+
+
+  });
+};
+
 
 /// Endpoint: live
 
@@ -333,7 +353,6 @@ interface PXrefEntry {
 }
 
 async function PXREF(req: NextApiRequest, res: NextApiResponse) {
-
   const { building, sensor } = req.query;
 
   if (typeof building != "string" || typeof sensor != "string" || !BUILDINGS.includes(building as Building) || !METRICS.includes(sensor as Metric)) {
@@ -374,7 +393,6 @@ interface XrefEntry {
 }
 
 async function XREF(req: NextApiRequest, res: NextApiResponse) {
-
   const { building, sensor } = req.query;
 
   if (typeof building != "string" || typeof sensor != "string" || !BUILDINGS.includes(building as Building) || !METRICS.includes(sensor as Metric)) {
@@ -420,7 +438,8 @@ async function XREF(req: NextApiRequest, res: NextApiResponse) {
 
 const endpoints = { live, hist, PXREF, XREF };
 
-export default function (req: NextApiRequest, res: NextApiResponse) {
+export default async function (req: NextApiRequest, res: NextApiResponse) {
+  await ensureConnection();
 
   const end = req.query.endpoint as string;
   const endpoint = endpoints[end];
