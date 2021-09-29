@@ -14,18 +14,12 @@ export const getID = () => {
 };
 
 export default function PopupID() {
-  const [popup, setPopup] = useState(false);
-  useEffect(() => {
-    if (getID() === "") {
-      setPopup(true);
-    }
-  }, []);
-
   const id = getID();
 
-  if (popup) {
+  const [show, setShow] = useState(id == "");
+
     return (
-      <Popup show={id == ""}>
+      <Popup show={show}>
         <h1 className="text-xl">Enter Your Participant ID to Continue</h1>
         <p className="text-base my-4 text-gray-500">
           You should be able to get this number from the experiment supervisor.
@@ -42,10 +36,8 @@ export default function PopupID() {
           type="number"
           onChange={(event) => localStorage.setItem("id", event.target.value)}
         />
-        <Button text="Submit" onClick={() => (id ? setPopup(false) : null)} />
+        <Button text="Submit" onClick={() => setShow(false)} />
       </Popup>
     );
-  };
 
-  return <></>;
 }

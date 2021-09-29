@@ -50,7 +50,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-100 overflow-x-hidden">
-      { id ? <PopupID /> : null }
+      <PopupID />
       <nav className="w-full">
         <div className="accent w-full h-2 bg-orange"></div>
       </nav>
@@ -61,7 +61,7 @@ export default function Home() {
         </h3>
         <section className="rooms flex flex-col pt-6">
           {favorites.map((room) => (
-            <Link href={`/room/${room.PointSliceID}`}>
+            <Link href={`/room/${room.PointSliceID}`} key={room.PointSliceID}>
               <motion.div
                 {...(id ? popIn : {})}
                 className="rounded-3xl bg-white shadow-md px-6 py-6 mb-6 flex items-center hover:shadow-xl transition-shadow cursor-pointer"
