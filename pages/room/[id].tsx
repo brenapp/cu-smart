@@ -3,13 +3,19 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { popIn } from "../../animations";
 import { useRouter } from "next/router";
+import PopupID from "../../components/popup/id";
+import { Select } from "../../components/Input";
+import { useState } from "react";
 
 export default function Home() {
   const router = useRouter();
   const { id } = router.query;
 
+  const [perception, setPerception] = useState("Cold");
+
   return (
     <div className="min-h-screen bg-gray-100">
+      <PopupID />
       <header className="w-full h-36 rounded-b-3xl bg-orange">
         <nav className="w-full flex items-center p-6 text-white">
           <Link href="/">
@@ -50,23 +56,12 @@ export default function Home() {
           <h5 className="text-gray-500">Question 1 of 3</h5>
           <div className="question flex-1 mt-2 text-gray-600 mb-4">
             <p className="text-base">This room feels...</p>
-            <div className="options flex flex-col md:flex-row">
-              <div className="option rounded-xl w-full px-6 my-2 border-2 border-gray-200 py-4 cursor-pointer hover:border-gray-300 md:mr-4 md:text-center">
-                Cold
-              </div>
-              <div className="option rounded-xl w-full px-6 my-2 border-2 border-gray-200 py-4 cursor-pointer hover:border-gray-300 md:mr-4 md:text-center">
-                Cool
-              </div>
-              <div className="option rounded-xl w-full px-6 my-2 border-2 border-gray-200 py-4 cursor-pointer hover:border-gray-300 md:mr-4 md:text-center">
-                Neutral
-              </div>
-              <div className="option rounded-xl w-full px-6 my-2 border-2 border-gray-200 py-4 cursor-pointer hover:border-gray-300 md:mr-4 md:text-center">
-                Warm
-              </div>
-              <div className="option rounded-xl w-full px-6 my-2 border-2 border-gray-200 py-4 cursor-pointer hover:border-gray-300 md:text-center">
-                Hot
-              </div>
-            </div>
+            <Select
+              options={["Cold", "Cool", "Neutral", "Warm", "Hot"]}
+              value={perception}
+              onSelect={item => setPerception(item)}
+              render={(item) => <>{item}</>}
+            />
           </div>
           <div>
             <a
