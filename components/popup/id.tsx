@@ -20,7 +20,7 @@ export default function PopupID() {
 
     return (
       <Popup show={show}>
-        <h1 className="text-xl">Enter Your Participant ID to Continue</h1>
+        <h1 className="text-xl font-bold">Enter Your Participant ID to Continue</h1>
         <p className="text-base my-4 text-gray-500">
           You should be able to get this number from the experiment supervisor.
           This number uniquely and anonymously identifies you, and is used to
