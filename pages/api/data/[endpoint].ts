@@ -124,7 +124,7 @@ async function ensureConnection() {
 
         }
 
-        connected[0] = false;
+        connected[1] = true;
         if (allConnected()) {
           resolve();
         };
