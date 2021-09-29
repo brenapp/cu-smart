@@ -3,19 +3,31 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { popIn } from "../../animations";
 import { useRouter } from "next/router";
-import PopupID from "../../components/popup/id";
+import PopupID, { getID } from "../../components/popup/id";
+import Popup from "../../components/Popup";
 import { Button, Select } from "../../components/Input";
 import { useState } from "react";
+import Survey from "../../components/Survey";
 
 export default function Home() {
   const router = useRouter();
   const { id } = router.query;
+  const participantID = getID();
 
+
+  const [submitted, setSubmitted] = useState(false);
   const [perception, setPerception] = useState("Cold");
 
   return (
     <div className="min-h-screen bg-gray-100">
       <PopupID />
+      <Popup show={submitted}>
+        <h1 className="text-xl font-bold">Submitted!</h1>
+        <p>Your feedback has been saved to the server successfully.</p>
+        <div className="flex justify-center items-center">
+          <Button text="Close" onClick={() => setSubmitted(false)} autoFocus />
+        </div>
+      </Popup>
       <header className="w-full h-36 rounded-b-3xl bg-orange">
         <nav className="w-full flex items-center p-6 text-white">
           <Link href="/">
@@ -36,35 +48,39 @@ export default function Home() {
           </Link>
           <p className="pl-3 text-lg flex-1">WATT 319</p>
         </nav>
-        <section className="live max-w-5xl m-auto flex items-center justify-evenly md:justify-start md:px-16 text-white">
-          <div className="text-center md:pr-12">
-            <p className="text-lg">73.4 °F</p>
-            <p className="text-white text-opacity-90">TEMP</p>
-          </div>
-          <div className="text-center md:pr-12">
-            <p className="text-lg">0.0</p>
-            <p className="text-white text-opacity-90">HUMIDITY</p>
-          </div>
-        </section>
+        <section className="live max-w-5xl m-auto flex items-center justify-evenly md:justify-start md:px-16 text-white"></section>
       </header>
       <main className="p-6 max-w-5xl m-auto">
         <motion.div
-          {...popIn}
+          {...(participantID == "" ? {} : popIn)}
           className="bg-white w-full rounded-3xl shadow-sm p-6 flex flex-col"
         >
-          <h3 className="text-base font-semibold uppercase">Survey</h3>
-          <h5 className="text-gray-500">Question 1 of 3</h5>
-          <div className="question flex-1 mt-2 text-gray-600">
-            <p className="text-base">This room feels...</p>
-            <Select
-              options={["Cold", "Cool", "Neutral", "Warm", "Hot"]}
-              value={perception}
-              onSelect={item => setPerception(item)}
-              render={(item) => <>{item}</>}
-            />
-            <Button text="Previous" className="mr-2" variant="disabled" />
-            <Button text="Next" />
-          </div>
+          <Survey onSubmit={() => setSubmitted(true)}>
+            <>
+              <p>This room's temperature feels...</p>
+              <Select
+                options={["Cold", "Cool", "Neutral", "Warm", "Hot"]}
+                value={perception}
+                onSelect={(item) => setPerception(item)}
+                render={(item) => <>{item}</>}
+              />
+            </>
+            <>
+              <p>I want this room's temperature to be...</p>
+              <Select
+                options={[
+                  "Much Cooler",
+                  "Cooler",
+                  "As Is",
+                  "Warmer",
+                  "Much Warmer",
+                ]}
+                value={perception}
+                onSelect={(item) => setPerception(item)}
+                render={(item) => <>{item}</>}
+              />
+            </>
+          </Survey>
         </motion.div>
       </main>
     </div>
