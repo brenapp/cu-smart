@@ -6,7 +6,7 @@
  */
 
 import mssql, { ConnectionPool } from "mssql";
-import { Building, BUILDINGS as BUILDING_NAMES, Metric, METRICS } from "../../../models/data";
+import { Building, BUILDINGS as BUILDING_NAMES, Metric, METRICS } from "../../../lib/client/data";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const BUILDINGS = Object.keys(BUILDING_NAMES);

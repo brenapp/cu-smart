@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { popIn } from "../animations";
+import { popIn } from "@lib/client/animations";
 
 export type Props = {
   children: React.ReactNode;

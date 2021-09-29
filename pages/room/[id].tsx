@@ -1,13 +1,12 @@
-import { ResponseType, BUILDINGS } from "../../models/data";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { popIn } from "../../animations";
+import { popIn } from "@lib/client/animations";
 import { useRouter } from "next/router";
-import PopupID, { getID } from "../../components/popup/id";
-import Popup from "../../components/Popup";
-import { Button, Select } from "../../components/Input";
+import PopupID, { getID } from "@components/popup/id";
+import Popup from "@components/Popup";
+import { Button, Select } from "@components/Input";
 import { useState } from "react";
-import Survey from "../../components/Survey";
+import Survey from "@components/Survey";
 
 export default function Home() {
   const router = useRouter();
