@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { popIn } from "../animations";
 import { useEffect, useState } from "react";
 import PopupID, { getID } from "../components/popup/id";
+import useSensorData from "../models/data"
 
 const favorites: ResponseType["XREF"] = [
   {
@@ -47,6 +48,14 @@ const favorites: ResponseType["XREF"] = [
 export default function Home() { 
 
   const id = getID();
+  const [data, actions] = useSensorData();
+
+  useEffect(() => {
+    console.log(data);
+    console.log(actions);
+    actions.ensureData("live", { building: "WATT", sensor: "TEMP" }, 1000 * 60);
+    actions.ensureData("live", { building: "WATT", sensor: "HUMIDITY" }, 1000 * 60);
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-100 overflow-x-hidden">
