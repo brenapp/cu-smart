@@ -52,7 +52,7 @@ export default function Home() {
       </header>
       <main className="p-6 max-w-5xl m-auto">
         <motion.div
-          {...(participantID == "" ? {} : popIn)}
+          {...(participantID ? popIn : {})}
           className="bg-white w-full rounded-3xl shadow-sm p-6 flex flex-col"
         >
           <Survey onSubmit={() => setSubmitted(true)}>
