@@ -31,7 +31,7 @@ interface MobileSensoryEntry {
   Reading: number;
 };
 
-const boxData = new Map<number, BoxData>([
+export const boxData = new Map<number, BoxData>([
   [8916, { temp: 0, humidity: 0 }],
   [8921, { temp: 0, humidity: 0 }],
   [8935, { temp: 0, humidity: 0 }],

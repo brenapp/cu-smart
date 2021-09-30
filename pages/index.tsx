@@ -51,14 +51,6 @@ export default function Home() {
   const [data, actions] = useSensorData();
 
   useEffect(() => {
-    console.log(data);
-    console.log(actions);
-    actions.ensureData("live", { building: "WATT", sensor: "TEMP" }, 1000 * 60);
-    actions.ensureData(
-      "live",
-      { building: "WATT", sensor: "HUMIDITY" },
-      1000 * 60
-    );
     actions.ensureData("XREF", { building: "WATT", sensor: "TEMP" }, 1000 * 60);
   }, []);
 
