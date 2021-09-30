@@ -117,12 +117,6 @@ export type Entry<T extends keyof ResponseType> = LoadedDataEntry<ResponseType[T
 
 // Store Types
 export interface GlobalState {
-    // Header Settings
-    header: {
-        display: boolean;
-        title: string;
-    };
-
     // In-Memory Cache of fetched data
     // EVENTUAL OPTIMIZATION: Save this to storage and hydrate onload
 
@@ -156,7 +150,6 @@ export interface GlobalState {
 
 export interface GlobalActions {
     setPartialState: (state: Partial<GlobalState>) => void;
-    updateHeader: (display: boolean, title: string) => void;
     ensureData<T extends keyof ResponseType>(
         endpoint: T,
         parameters: RequestParameters[T],
@@ -179,19 +172,6 @@ function setPartialState(
     state: Partial<GlobalState>
 ) {
     store.setState({ ...store.state, ...state });
-}
-
-function updateHeader(
-    store: Store<GlobalState, GlobalActions>,
-    display: boolean,
-    title: string
-) {
-    store.actions.setPartialState({
-        header: {
-            display,
-            title,
-        },
-    });
 }
 
 function accessEntry<T extends keyof ResponseType>(store: Store<GlobalState, GlobalActions>, endpoint: T,
@@ -323,7 +303,6 @@ async function ensureData<T extends keyof ResponseType>(
 
 const actions = {
     setPartialState,
-    updateHeader,
     isLoadingData,
     updateEntry,
     ensureData,
@@ -331,10 +310,6 @@ const actions = {
 
 // Initial State
 const initialState: GlobalState = {
-    header: {
-        display: true,
-        title: "",
-    },
     live: {
         WATT: {
             TEMP: {
