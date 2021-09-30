@@ -46,7 +46,7 @@ export function Button({ text, onClick, variant, className, autoFocus }: ButtonP
 }
 
 export type SelectProps<T> = {
-  options: T[];
+  options: readonly T[];
   value: T;
   onSelect: (value: T) => void;
 
