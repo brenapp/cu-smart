@@ -21,7 +21,8 @@
     "downlevelIteration": true,
     "paths": {
       "@lib/*": ["lib/*"],
-      "@components/*": ["components/*"]
+      "@components/*": ["components/*"],
+      "@static/*": ["public/*"]
 
     }
   },
