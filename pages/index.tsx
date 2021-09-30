@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { popIn } from "@lib/client/animations";
 import PopupID, { getID } from "@components/popup/id";
 import useSensorData from "@lib/client/data";
+import Head from "next/head";
 
 const favorites: ResponseType["XREF"] = [
   {
@@ -58,11 +59,16 @@ export default function Home() {
       { building: "WATT", sensor: "HUMIDITY" },
       1000 * 60
     );
+    actions.ensureData("XREF", { building: "WATT", sensor: "TEMP" }, 1000 * 60);
   }, []);
 
   return (
     <div className="min-h-screen bg-gray-100 overflow-x-hidden">
       <PopupID />
+      <Head>
+        <title>CU Smart</title>
+        <meta name="description" content="Helps you find the optimal study space on Campus! Currently in development." />
+      </Head>
       <nav className="w-full">
         <div className="accent w-full h-2 bg-orange"></div>
       </nav>
