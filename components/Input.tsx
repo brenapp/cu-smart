@@ -1,4 +1,4 @@
-import { ChangeEvent, ReactNode, useState } from "react";
+import { ChangeEvent, ReactChild, ReactNode, useState } from "react";
 
 export type InputProps = {
   placeholder?: string;
@@ -22,11 +22,12 @@ export type ButtonProps = {
   variant?: "primary" | "secondary" | "disabled";
   className?: string;
   autoFocus?: boolean;
+  before?: () => ReactChild;
 };
 
-export function Button({ text, onClick, variant, className, autoFocus }: ButtonProps) {
+export function Button({ text, onClick, variant, className, autoFocus, before }: ButtonProps) {
 
-  const base = "w-32 py-2 mt-4 text-center rounded-lg border-box hover:shadow-md transition:all"
+  const base = "w-32 py-2 mt-4 text-center rounded-lg border-box hover:shadow-md transition:all flex justify-center items-center"
 
   const variants = {
     primary: "text-white bg-orange active:bg-opacity-50",
@@ -40,6 +41,7 @@ export function Button({ text, onClick, variant, className, autoFocus }: ButtonP
       onClick={onClick}
       autoFocus={autoFocus}
     >
+      {before && before()}
       {text}
     </button>
   );

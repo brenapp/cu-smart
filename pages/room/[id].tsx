@@ -13,6 +13,8 @@ import useSensorData, { Entry, ResponseType } from "@lib/client/data";
 
 import clothing1 from "@static/clothing/clothing1.png";
 import clothing2 from "@static/clothing/clothing2.png";
+import { Feedback } from "pages/api/feedback";
+import Spinner from "@components/Spinner";
 const images = [clothing1, clothing2];
 
 function get<T extends "XREF" | "live" | "PXREF">(
@@ -50,7 +52,24 @@ async function submit(
   perception: number,
   preference: number,
   clothing: number
-) {}
+) {
+
+  const body: Feedback = {
+    place_id: placeID,
+    user_id: participantID,
+    perception,
+    preference,
+    clothing_level: clothing,
+  };
+
+  await fetch("/api/feedback", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      },
+    body: JSON.stringify(body),
+  });
+}
 
 export default function FeedbackPage() {
   const router = useRouter();
@@ -58,7 +77,9 @@ export default function FeedbackPage() {
   const participantID = getID();
   const [data, actions] = useSensorData();
 
-  const [submitted, setSubmitted] = useState(false);
+  const [popup, setPopup] = useState(false);
+  const [spinner, setSpinner] = useState(false);
+
 
   // Survey questions
   const [perception, setPerception] = useState(2);
@@ -68,7 +89,7 @@ export default function FeedbackPage() {
   return (
     <div className="min-h-screen bg-gray-100">
       <PopupID />
-      <Popup show={submitted}>
+      <Popup show={popup}>
         <h1 className="text-xl font-bold">Submitted!</h1>
         <p>Your feedback has been saved to the server successfully.</p>
         <div className="flex justify-center items-center">
@@ -106,9 +127,14 @@ export default function FeedbackPage() {
           className="bg-white w-full rounded-3xl shadow-sm p-6 flex flex-col"
         >
           <Survey
+            submitButton={{
+              before: () => spinner ? <Spinner /> : null
+            }}
             onSubmit={async () => {
+              setSpinner(true);
               await submit(id, participantID, perception, preference, clothing);
-              setSubmitted(true);
+              setSpinner(false);
+              setPopup(true);
             }}
           >
             <>

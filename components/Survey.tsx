@@ -1,13 +1,14 @@
 import { motion } from "framer-motion";
 import { ReactChild, useState } from "react";
-import { Button } from "./Input";
+import { Button, ButtonProps } from "./Input";
 
 type Props = {
   children: ReactChild[];
   onSubmit?: () => void;
+  submitButton?: Partial<ButtonProps>
 };
 
-export default function Survey({ children, onSubmit }: Props) {
+export default function Survey({ children, onSubmit, submitButton }: Props) {
   const [index, setIndex] = useState(0);
 
   const increment: () => void = () =>
@@ -31,7 +32,7 @@ export default function Survey({ children, onSubmit }: Props) {
         {index < children.length - 1 ? (
           <Button text="Next" variant="primary" onClick={increment} />
         ) : (
-          <Button text="Submit" variant="primary" onClick={onSubmit} />
+          <Button text="Submit" variant="primary" onClick={onSubmit} {...submitButton} />
         )}
       </div>
     </div>
