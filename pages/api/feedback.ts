@@ -15,9 +15,9 @@ import { boxData } from "./data/[endpoint]";
 export type Feedback = {
     place_id: string;
     user_id: string;
-    perception: string;
-    preference: string;
-    clothing_level: string;
+    perception: number;
+    preference: number;
+    clothing_level: number;
 };
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
@@ -32,9 +32,9 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     const feedback: UserFeedback = {
         place_id: Number.parseInt(body.place_id),
         user_id: Number.parseInt(body.user_id),
-        sensations_temperature: Number.parseInt(body.perception) as FivePointScale,
-        preferences_temperature: Number.parseInt(body.preference) as FivePointScale,
-        clothing_level: Number.parseInt(body.clothing_level) as FivePointScale,
+        sensations_temperature: body.perception as FivePointScale,
+        preferences_temperature: body.preference as FivePointScale,
+        clothing_level: body.clothing_level as FivePointScale,
 
         indoor_temp: 0.0,
         indoor_humidity: 0.0,
