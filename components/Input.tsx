@@ -1,6 +1,6 @@
-import { ChangeEvent, ReactChild, ReactNode, useState } from "react";
+import { ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, ReactChild, ReactNode, useState } from "react";
 
-export type InputProps = {
+export type InputProps = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> & {
   placeholder?: string;
   value?: string;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -8,11 +8,12 @@ export type InputProps = {
   onFocus?: () => void;
 
   type?: string;
+
 };
 
 export function Input(props: InputProps) {
   return (
-    <input {...props} className="w-full py-2 text-center border-2 rounded-lg" />
+    <input {...props} className={"w-full py-2 text-center border-2 rounded-lg after:" + props.className} />
   );
 }
 
@@ -50,7 +51,7 @@ export function Button({ text, onClick, variant, className, autoFocus, before }:
 export type SelectProps<T> = {
   options: readonly T[];
   value: T;
-  onSelect: (value: T) => void;
+  onSelect: (value: T, selected: boolean) => void;
 
   render: (item: T) => ReactNode;
 };
@@ -72,7 +73,7 @@ export function Select<T>({
         <div
           key={i}
           className={value === item ? selected : unselected}
-          onClick={() => onSelect(item)}
+          onClick={() => onSelect(item, value === item)}
         >
           {render(item)}
         </div>

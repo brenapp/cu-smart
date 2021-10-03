@@ -1,11 +1,76 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ResponseType, BUILDINGS } from "@lib/client/data";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { popIn } from "@lib/client/animations";
+import { popIn, slideRight } from "@lib/client/animations";
 import PopupID, { getID } from "@components/popup/id";
 import useSensorData from "@lib/client/data";
 import Head from "next/head";
+import { Input, Select } from "@components/Input";
+
+function SettingsPane() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <div className="w-16 h-16 bg-orange text-white fixed right-0 top-0 z-10 rounded-bl-2xl flex justify-center items-center">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-7 w-7 cursor-pointer hover:rotate-90 transition-transform"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          onClick={() => setOpen(!open)}
+        >
+          {open ? (
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          ) : (
+            <>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </>
+          )}
+        </svg>
+      </div>
+      <motion.div
+        {...slideRight()}
+        initial="closed"
+        animate={open ? "open" : "closed"}
+      >
+        <div className="bg-orange w-96 fixed right-0 h-screen p-6 pt-4">
+          <h1 className="text-2xl text-white text-center mb-4 subpixel-antialiased">
+            Settings
+          </h1>
+
+          <div className="mb-4">
+            <label
+              htmlFor="participant-id"
+              className="text-white text-opacity-95 mb-2 block text-lg"
+            >
+              Participant ID
+            </label>
+            <Input id="participant-id" value={"1234"} className="border-0" />
+          </div>
+        </div>
+      </motion.div>
+    </>
+  );
+}
 
 const favorites: ResponseType["XREF"] = [
   {
@@ -56,11 +121,15 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-100 overflow-x-hidden">
-      <PopupID />
       <Head>
         <title>CU Smart</title>
-        <meta name="description" content="Helps you find the optimal study space on Campus! Currently in development." />
+        <meta
+          name="description"
+          content="Helps you find the optimal study space on Campus! Currently in development."
+        />
       </Head>
+      <SettingsPane />
+      <PopupID />
       <nav className="w-full">
         <div className="accent w-full h-2 bg-orange"></div>
       </nav>

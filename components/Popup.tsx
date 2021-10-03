@@ -8,7 +8,7 @@ export type Props = {
 
 export default function Popup({ children, show }: Props) {
   if (!show) {
-    return <></>;
+    return null;
   }
 
   return (

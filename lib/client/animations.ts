@@ -17,5 +17,19 @@ const popIn = {
     }
 };
 
+const slideRight = (open?: any, closed?: any) => ({
+    variants: {
+        open: {
+            x: open ?? 0
+        },
+        closed: {
+            x: closed ?? "100%"
+        }
+    },
+    transition: {
+        type: "tween",
+    },
+});
 
-export { popIn };
+
+export { popIn, slideRight };
