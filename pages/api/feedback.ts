@@ -10,14 +10,14 @@
 
 import { addFeedback, FivePointScale, UserFeedback } from "@lib/server/database";
 import { NextApiRequest, NextApiResponse } from "next";
-import { boxData } from "./data/[endpoint]";
+import { boxData } from "@lib/server/data";
 
 export type Feedback = {
     place_id: string;
     user_id: string;
-    perception: number;
-    preference: number;
-    clothing_level: number;
+    perception: FivePointScale;
+    preference: FivePointScale;
+    clothing_level: FivePointScale;
 };
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
@@ -32,9 +32,9 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     const feedback: UserFeedback = {
         place_id: Number.parseInt(body.place_id),
         user_id: Number.parseInt(body.user_id),
-        sensations_temperature: body.perception as FivePointScale,
-        preferences_temperature: body.preference as FivePointScale,
-        clothing_level: body.clothing_level as FivePointScale,
+        sensations_temperature: body.perception,
+        preferences_temperature: body.preference,
+        clothing_level: body.clothing_level,
 
         indoor_temp: 0.0,
         indoor_humidity: 0.0,
