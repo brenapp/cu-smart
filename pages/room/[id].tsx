@@ -15,6 +15,7 @@ import clothing1 from "@static/clothing/clothing1.png";
 import clothing2 from "@static/clothing/clothing2.png";
 import { Feedback } from "pages/api/feedback";
 import Spinner from "@components/Spinner";
+import { FivePointScale } from "@lib/server/database";
 const images = [clothing1, clothing2];
 
 function get<T extends "XREF" | "live" | "PXREF">(
@@ -49,9 +50,9 @@ const options = {
 async function submit(
   placeID: string,
   participantID: string,
-  perception: number,
-  preference: number,
-  clothing: number
+  perception: FivePointScale,
+  preference: FivePointScale,
+  clothing: FivePointScale
 ) {
 
   const body: Feedback = {
@@ -82,9 +83,9 @@ export default function FeedbackPage() {
 
 
   // Survey questions
-  const [perception, setPerception] = useState(2);
-  const [preference, setPreference] = useState(2);
-  const [clothing, setClothing] = useState(1);
+  const [perception, setPerception] = useState<FivePointScale>(3);
+  const [preference, setPreference] = useState<FivePointScale>(3);
+  const [clothing, setClothing] = useState<FivePointScale>(1);
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -141,9 +142,9 @@ export default function FeedbackPage() {
               <p>This room's temperature feels...</p>
               <Select
                 options={options.perception}
-                value={options.perception[perception]}
+                value={options.perception[perception - 1]}
                 onSelect={(item) =>
-                  setPerception(options.perception.indexOf(item))
+                  setPerception(options.perception.indexOf(item) + 1 as FivePointScale)
                 }
                 render={(item) => <>{item}</>}
               />
@@ -152,9 +153,9 @@ export default function FeedbackPage() {
               <p>I want this room's temperature to be...</p>
               <Select
                 options={options.preference}
-                value={options.preference[preference]}
+                value={options.preference[preference - 1]}
                 onSelect={(item) =>
-                  setPreference(options.preference.indexOf(item))
+                  setPreference(options.preference.indexOf(item) + 1 as FivePointScale)
                 }
                 render={(item) => <>{item}</>}
               />
@@ -164,7 +165,7 @@ export default function FeedbackPage() {
               <Select
                 options={[1, 2]}
                 value={clothing}
-                onSelect={(item) => setClothing(item)}
+                onSelect={(item: FivePointScale) => setClothing(item)}
                 render={(item) => (
                   <div className="w-full flex items-center justify-center">
                     <Image
