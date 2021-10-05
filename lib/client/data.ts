@@ -247,6 +247,7 @@ function updateEntry<T extends keyof ResponseType>(
 
     }
 
+    localStorage.setItem("data", JSON.stringify(store.state));
 }
 
 
@@ -309,7 +310,7 @@ const actions = {
 };
 
 // Initial State
-const initialState: GlobalState = {
+let initialState: GlobalState = {
     live: {
         WATT: {
             TEMP: {
@@ -538,6 +539,10 @@ const initialState: GlobalState = {
             },
         },
     },
+};
+
+if (process.browser && localStorage.getItem("data")) {
+    initialState = JSON.parse(localStorage.getItem("data"));
 };
 
 const useGlobal = globalHook<GlobalState, GlobalActions>(
