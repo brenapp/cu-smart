@@ -1,5 +1,6 @@
 {
   "private": true,
+  "name": "cu-smart",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
