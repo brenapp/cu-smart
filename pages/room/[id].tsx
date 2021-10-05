@@ -16,6 +16,7 @@ import clothing2 from "@static/clothing/clothing2.png";
 import { Feedback } from "pages/api/feedback";
 import Spinner from "@components/Spinner";
 import { FivePointScale } from "@lib/server/database";
+import { Header } from "@components/Header";
 const images = [clothing1, clothing2];
 
 function get<T extends "XREF" | "live" | "PXREF">(
@@ -54,7 +55,6 @@ async function submit(
   preference: FivePointScale,
   clothing: FivePointScale
 ) {
-
   const body: Feedback = {
     place_id: placeID,
     user_id: participantID,
@@ -67,7 +67,7 @@ async function submit(
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      },
+    },
     body: JSON.stringify(body),
   });
 }
@@ -80,7 +80,6 @@ export default function FeedbackPage() {
 
   const [popup, setPopup] = useState(false);
   const [spinner, setSpinner] = useState(false);
-
 
   // Survey questions
   const [perception, setPerception] = useState<FivePointScale>(3);
@@ -97,28 +96,7 @@ export default function FeedbackPage() {
           <Button text="Close" onClick={() => router.push("/")} autoFocus />
         </div>
       </Popup>
-      <header className="w-full h-20 rounded-b-xl bg-orange">
-        <nav className="w-full flex items-center p-6 text-white">
-          <Link href="/">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-8 w-8 text-white cursor-pointer"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M11 17l-5-5m0 0l5-5m-5 5h12"
-              />
-            </svg>
-          </Link>
-          <p className="pl-3 text-lg flex-1">User Feedback</p>
-        </nav>
-        <section className="live max-w-5xl m-auto flex items-center justify-evenly md:justify-start md:px-16 text-white"></section>
-      </header>
+      <Header title="User Feedback" />
       <main className="p-6 max-w-5xl m-auto items-center">
         <Head>
           <title>User Feedback</title>
@@ -129,7 +107,7 @@ export default function FeedbackPage() {
         >
           <Survey
             submitButton={{
-              before: () => spinner ? <Spinner /> : null
+              before: () => (spinner ? <Spinner /> : null),
             }}
             onSubmit={async () => {
               setSpinner(true);
@@ -144,7 +122,9 @@ export default function FeedbackPage() {
                 options={options.perception}
                 value={options.perception[perception - 1]}
                 onSelect={(item) =>
-                  setPerception(options.perception.indexOf(item) + 1 as FivePointScale)
+                  setPerception(
+                    (options.perception.indexOf(item) + 1) as FivePointScale
+                  )
                 }
                 render={(item) => <>{item}</>}
               />
@@ -155,7 +135,9 @@ export default function FeedbackPage() {
                 options={options.preference}
                 value={options.preference[preference - 1]}
                 onSelect={(item) =>
-                  setPreference(options.preference.indexOf(item) + 1 as FivePointScale)
+                  setPreference(
+                    (options.preference.indexOf(item) + 1) as FivePointScale
+                  )
                 }
                 render={(item) => <>{item}</>}
               />
