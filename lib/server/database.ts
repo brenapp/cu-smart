@@ -3,7 +3,7 @@ import * as sqlite from "sqlite";
 import { getTemperature, getRelativeHumidity } from "./outside";
 
 export async function database() {
-    const dbPath = "/data/cu-smart.db";
+    const dbPath = process.env.NODE_ENV == "development" ? "./cu-smart.db" : "/data/cu-smart.db";
     console.info(`Opening cached database ${dbPath}...`);
     return sqlite.open({
         mode: sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE,
