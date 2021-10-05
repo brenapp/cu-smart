@@ -74,9 +74,14 @@ export default function Admin() {
       <div className="md:py-4 px-12 flex flex-col sm:py-12 m-auto">
         <div className="live flex">
           {favorites.map((room) => {
-
-            const [tempLoaded, temp] = get(room.PointSliceID, data.live[room.BLG].TEMP);
-            const [humidityLoaded, humidity] = get(room.PointSliceID, data.live[room.BLG].HUMIDITY);
+            const [tempLoaded, temp] = get(
+              room.PointSliceID,
+              data.live[room.BLG].TEMP
+            );
+            const [humidityLoaded, humidity] = get(
+              room.PointSliceID,
+              data.live[room.BLG].HUMIDITY
+            );
 
             const loaded = tempLoaded && humidityLoaded;
 
@@ -102,7 +107,11 @@ export default function Admin() {
                     <p>Temp: {temp.ActualValue.toFixed(2)}</p>
                     <p>Humidity: {humidity.ActualValue.toFixed(2)}</p>
                   </div>
-                ) : <div className="mt-4 flex items-center justify-center text-orange"><Spinner /></div>}
+                ) : (
+                  <div className="mt-4 flex items-center justify-evenly text-orange">
+                    <Spinner />
+                  </div>
+                )}
               </div>
             );
           })}
@@ -112,9 +121,11 @@ export default function Admin() {
           <table className="table-auto m-auto">
             <thead>
               <tr>
-                <p className="text-base text-gray-500 italic">
-                  Last Updated: {updated?.toLocaleTimeString() ?? ""}
-                </p>
+                <th>
+                  <p className="text-base text-gray-500 italic">
+                    Last Updated: {updated?.toLocaleTimeString() ?? ""}
+                  </p>
+                </th>
               </tr>
               <tr>
                 <th className="pr-2 text-left">Participant ID</th>
