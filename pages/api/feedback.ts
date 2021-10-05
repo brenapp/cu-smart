@@ -10,7 +10,7 @@
 
 import { addFeedback, ensureSchema, FivePointScale, UserFeedback } from "@lib/server/database";
 import { NextApiRequest, NextApiResponse } from "next";
-import { boxData } from "@lib/server/data";
+import { boxData, ensureConnection } from "@lib/server/data";
 
 export type Feedback = {
     place_id: string;
@@ -28,6 +28,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     }
 
     await ensureSchema();
+    await ensureConnection();
 
     try {
         const body = req.body as Feedback;
