@@ -6,10 +6,9 @@ import { popIn, slideRight } from "@lib/client/animations";
 import PopupID, { getID } from "@components/popup/id";
 import useSensorData from "@lib/client/data";
 import Head from "next/head";
-import { Input, Select } from "@components/Input";
+import { Button, Input, Select } from "@components/Input";
 
 function SettingsPane() {
-  
   const [open, setOpen] = useState(false);
   const [id, setID] = useState(() => {
     if (process.browser) {
@@ -133,7 +132,7 @@ export default function Home() {
         />
       </Head>
       <SettingsPane />
-      { process.browser && <PopupID /> }
+      {process.browser && <PopupID />}
 
       <nav className="w-full">
         <div className="accent w-full h-2 bg-orange"></div>
@@ -181,6 +180,11 @@ export default function Home() {
             </Link>
           ))}
         </section>
+        <div className="flex items-center justify-center">
+          <Link href="/suggest">
+            <Button text={"Suggest A Room"} variant="primary" />
+          </Link>
+        </div>
       </div>
     </div>
   );

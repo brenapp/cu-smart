@@ -28,7 +28,8 @@ export type ButtonProps = {
 
 export function Button({ text, onClick, variant, className, autoFocus, before }: ButtonProps) {
 
-  const base = "w-32 py-2 mt-4 text-center rounded-lg border-box hover:shadow-md transition:all flex justify-center items-center"
+
+  const base = "py-2 px-4 mt-4 text-center rounded-lg border-box hover:shadow-md transition:all flex justify-center items-center"
 
   const variants = {
     primary: "text-white bg-orange active:bg-opacity-50",
