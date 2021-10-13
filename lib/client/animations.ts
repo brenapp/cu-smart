@@ -31,5 +31,11 @@ const slideRight = (open?: any, closed?: any) => ({
     },
 });
 
+const spring  = {
+    type: "spring",
+    damping: 25,
+    stiffness: 120
+  };
 
-export { popIn, slideRight };
+
+export { popIn, slideRight, spring };
