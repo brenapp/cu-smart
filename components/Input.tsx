@@ -54,16 +54,18 @@ export type SelectProps<T> = {
   value: T;
   onSelect: (value: T, selected: boolean) => void;
 
+  className?: string;
   render: (item: T) => ReactNode;
 };
 export function Select<T>({
   options,
   render,
   onSelect,
+  className,
   value,
 }: SelectProps<T>) {
 
-  const base = "rounded-xl flex-1 my-2 border-2 border-gray-200 py-4 cursor-pointer md:mr-4 md:text-center last:mr-0"
+  const base = className + " rounded-xl flex-1 my-2 border-2 border-gray-200 py-4 cursor-pointer md:mr-4 md:text-center last:mr-0"
 
   const unselected = base + " hover:border-gray-300";
   const selected = base + " border-orange";

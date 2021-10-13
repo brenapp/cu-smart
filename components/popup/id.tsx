@@ -14,8 +14,8 @@ export const getID = () => {
 };
 
 export default function PopupID() {
+    
   const id = getID();
-
   const [show, setShow] = useState(id == "");
 
     return (
@@ -34,7 +34,7 @@ export default function PopupID() {
         <Input
           placeholder="Your Participant ID"
           type="number"
-          onChange={(event) => localStorage.setItem("id", event.target.value)}
+          onChange={(event) => process.browser ? localStorage.setItem("id", event.target.value) : null}
         />
         <Button text="Submit" onClick={() => setShow(false)} />
       </Popup>

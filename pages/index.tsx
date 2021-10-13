@@ -94,7 +94,7 @@ export default function Home() {
         />
       </Head>
       <SettingsPane />
-      {process.browser && <PopupID />}
+      <PopupID />
 
       <nav className="w-full">
         <div className="accent w-full h-2 bg-orange"></div>
