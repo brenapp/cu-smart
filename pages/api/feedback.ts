@@ -10,7 +10,7 @@
 
 import { addFeedback, ensureSchema, FivePointScale, UserFeedback } from "@lib/server/database";
 import { NextApiRequest, NextApiResponse } from "next";
-import { boxData, ensureConnection } from "@lib/server/data";
+import { ensureConnection, getBoxData } from "@lib/server/data";
 
 export type Feedback = {
     place_id: string;
@@ -43,6 +43,8 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
             indoor_temp: 0.0,
             indoor_humidity: 0.0,
         };
+
+        const boxData = await getBoxData();
     
         // Get the room conditions
         const { temp, humidity } = boxData.get(feedback.place_id);
