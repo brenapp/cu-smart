@@ -126,7 +126,7 @@ export default function FeedbackPage() {
                     (options.perception.indexOf(item) + 1) as FivePointScale
                   )
                 }
-                render={(item) => <>{item}</>}
+                render={(item) => <p className="text-center">{item}</p>}
               />
             </>
             <>
@@ -139,7 +139,7 @@ export default function FeedbackPage() {
                     (options.preference.indexOf(item) + 1) as FivePointScale
                   )
                 }
-                render={(item) => <>{item}</>}
+                render={(item) => <p className="text-center">{item}</p>}
               />
             </>
             <>
