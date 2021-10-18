@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Header } from "@components/Header";
 import Head from "next/head";
-import { motion } from "framer-motion";
-import { popIn, spring } from "@lib/client/animations";
+import { motion, useCycle } from "framer-motion";
 import { Select } from "@components/Input";
 import { FivePointScale } from "@lib/server/database";
 import Image from "next/image";
@@ -14,15 +13,18 @@ const images = [clothing1, clothing2];
 
 import { favorites } from "@lib/client/favorites";
 
+const itemsA = [0, 1, 2, 3];
+const itemsB = [2, 0, 3, 1];
+const itemsC = [3, 2, 1, 0];
+const itemsD = [1, 3, 0, 2];
+
 export default function Suggest() {
-  const [clothing, setClothing] = useState(1);
-  const [order, setOrder] = useState(favorites);
+  const [clothing, setClothing] = useState(-1);
+  const [items, setItems] = useCycle(itemsA, itemsB, itemsC, itemsD);
 
   useEffect(() => {
-    setTimeout(() => setOrder(
-      order.sort(() => Math.round(2 * (Math.random() - 0.5)))
-    ), 1000);
-  }, [order]);
+    setItems();
+  }, [clothing]);
 
   return (
     <main className="min-h-screen bg-gray-100">
@@ -56,24 +58,30 @@ export default function Suggest() {
           )}
         />
 
-        <div className="mt-6">
-          {order.map((room) => (
+        <h1 className="mt-8 mb-4 uppercase text-lg text-center text-gray-700">Your Suggested Rooms</h1>
+        { clothing !== -1 && (<div>
+          {items.map((item, index) => (
             <motion.div
+              key={item}
               layout
-              transition={spring}
+              initial="false"
+              transition={{ type: "spring", stiffness: 350, damping: 25 }}
               className="rounded-3xl bg-white shadow-md px-6 py-6 mb-6 flex items-center hover:shadow-xl transition-shadow cursor-pointer"
             >
+               <div className="rounded-lg mr-6 overflow-hidden flex items-center">
+                <h1 className="text-xl text-orange">#{index + 1}</h1>
+              </div>
               <div className="h-12 w-12 bg-gray-500 rounded-lg mr-6 overflow-hidden">
                 <img
-                  src={`/buildings/${room.BLG}.png`}
-                  alt={BUILDINGS[room.BLG]}
+                  src={`/buildings/${favorites[item].BLG}.png`}
+                  alt={BUILDINGS[favorites[item].BLG]}
                   className="h-full rounded-lg max-w-max"
                 />
               </div>
               <div className="flex-1">
-                <h3 className="text-lg">{room.Alias}</h3>
+                <h3 className="text-lg">{favorites[item].Alias}</h3>
                 <h5 className="text-base text-gray-500">
-                  {BUILDINGS[room.BLG]}
+                  {BUILDINGS[favorites[item].BLG]}
                 </h5>
               </div>
               <svg
@@ -92,7 +100,7 @@ export default function Suggest() {
               </svg>
             </motion.div>
           ))}
-        </div>
+        </div>)}
       </div>
     </main>
   );
