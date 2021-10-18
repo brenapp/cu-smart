@@ -35,6 +35,7 @@ export default function PopupID() {
           placeholder="Your Participant ID"
           type="number"
           onChange={(event) => process.browser ? localStorage.setItem("id", event.target.value) : null}
+          onKeyDown={(event) => event.key === "Enter" ? setShow(false) : null}
         />
         <Button text="Submit" onClick={() => setShow(false)} />
       </Popup>
