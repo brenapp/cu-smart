@@ -7,7 +7,7 @@
 
 import { Building, BUILDINGS as BUILDING_NAMES, Metric, METRICS } from "@lib/client/data";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { boxData, ensureConnection, BUILDINGS, mobileMETRICS, thermostatData } from "@lib/server/data"
+import { getBoxData, ensureConnection, BUILDINGS, mobileMETRICS, thermostatData } from "@lib/server/data"
 
 /// Endpoint: live
 
@@ -22,6 +22,7 @@ interface LiveEntry {
 async function live(req: NextApiRequest, res: NextApiResponse) {
   const { building, sensor } = req.query;
 
+  const boxData = await getBoxData();
   if (typeof building != "string" || typeof sensor != "string" || !BUILDINGS.includes(building as Building) || !METRICS.includes(sensor as Metric)) {
     res.status(400).json({
       "status": "err",
@@ -35,6 +36,8 @@ async function live(req: NextApiRequest, res: NextApiResponse) {
       let data: LiveEntry[] = [];
 
       if (building == "WATT") {
+
+
         for (const [id, box] of boxData) {
           data.push({
             PointSliceID: id.toString(),
@@ -73,6 +76,7 @@ async function live(req: NextApiRequest, res: NextApiResponse) {
           "ETDateTime": new Date().toISOString(),
           "ActualValue": 0
         });
+
 
         // Insert box data if it exists
         data = [...record].map(room => {
