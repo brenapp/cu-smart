@@ -117,7 +117,7 @@ export default function Admin() {
           })}
         </div>
 
-        <div className="submissions">
+        <div className="submissions rounded-3xl bg-white shadow-md px-6 mr-4 py-6 ml-2">
           <table className="table-auto m-auto">
             <thead>
               <tr>
