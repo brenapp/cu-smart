@@ -58,8 +58,8 @@ export default function Suggest() {
           )}
         />
 
-        <h1 className="mt-8 mb-4 uppercase text-lg text-center text-gray-700">Your Suggested Rooms</h1>
         { clothing !== -1 && (<div>
+          <h1 className="mt-8 mb-4 uppercase text-lg text-center text-gray-700">Your Suggested Rooms</h1>
           {items.map((item, index) => (
             <motion.div
               key={item}
