@@ -50,6 +50,10 @@ export async function getTemperature() {
     const latest = await getLatest();
     const degC = latest.properties.temperature.value;
 
+    if (!degC) {
+        return NaN;
+    }
+
     return degC * 9 / 5 + 32;
 }
 
@@ -59,5 +63,5 @@ export async function getTemperature() {
  */
 export async function getRelativeHumidity() {
     const latest = await getLatest();
-    return latest.properties.relativeHumidity.value;
+    return latest.properties.relativeHumidity.value ?? NaN;
 }
