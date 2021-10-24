@@ -32,7 +32,7 @@ export default function Suggest() {
         <title>Suggest A Room</title>
       </Head>
       <Header title="Room Recommendation" />
-      <div className="py-3 px-12 flex flex-col sm:py-12 max-w-3xl m-auto">
+      <div className="py-3 px-6 flex flex-col sm:py-12 max-w-3xl m-auto">
         <p className="text-lg text-gray-500">
           Based on your earlier feedback, we have developed a personalized
           machine learning model to best recommend a room for you.

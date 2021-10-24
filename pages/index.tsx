@@ -99,7 +99,7 @@ export default function Home() {
       <nav className="w-full">
         <div className="accent w-full h-2 bg-orange"></div>
       </nav>
-      <div className="py-6 px-12 flex flex-col sm:py-12 max-w-3xl m-auto">
+      <div className="p-6 flex flex-col sm:py-12 max-w-3xl m-auto">
         <h1 className="text-3xl pb-1">Welcome Back!</h1>
         <h3 className="text-xl text-gray-500">
           Select a room below to continue
