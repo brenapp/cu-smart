@@ -46,6 +46,7 @@ export default function Suggest() {
           value={clothing}
           onSelect={(item: FivePointScale) => setClothing(item)}
           className="mt-4"
+          mode="row"
           render={(item) => (
             <div className="w-full flex items-center justify-center">
               <Image

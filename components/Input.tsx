@@ -54,6 +54,8 @@ export type SelectProps<T> = {
   value: T;
   onSelect: (value: T, selected: boolean) => void;
 
+  mode?: "row" | "col" | "responsive";
+
   className?: string;
   render: (item: T) => ReactNode;
 };
@@ -62,16 +64,23 @@ export function Select<T>({
   render,
   onSelect,
   className,
+  mode = "responsive",
   value,
 }: SelectProps<T>) {
 
-  const base = className + " rounded-xl flex-1 my-2 border-2 border-gray-200 py-4 cursor-pointer md:mr-4 md:text-center last:mr-0"
+  const base = className + " rounded-xl flex-1 my-2 mx-2 border-2 border-gray-200 py-4 cursor-pointer md:mr-4 text-center"
 
   const unselected = base + " hover:border-gray-300";
   const selected = base + " border-orange";
 
+  const flex = {
+    row: "flex-row",
+    col: "flex-col",
+    responsive: "md:flex-row",
+  };
+
   return (
-    <div className="options flex flex-col md:flex-row justify-between">
+    <div className={`options flex ${flex[mode]} justify-between`}>
       {options.map((item, i) => (
         <div
           key={i}
