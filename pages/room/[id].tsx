@@ -9,7 +9,7 @@ import Popup from "@components/Popup";
 import { Button, Select } from "@components/Input";
 import React, { useState } from "react";
 import Survey from "@components/Survey";
-import useSensorData, { Entry, ResponseType } from "@lib/client/data";
+import useSensorData, { BUILDINGS, Entry, ResponseType } from "@lib/client/data";
 
 import clothing1 from "@static/clothing/clothing1.png";
 import clothing2 from "@static/clothing/clothing2.png";
@@ -86,6 +86,8 @@ export default function FeedbackPage() {
   const [preference, setPreference] = useState<FivePointScale>(3);
   const [clothing, setClothing] = useState<FivePointScale>(1);
 
+  const room = data.XREF.WATT.TEMP.loaded ? data.XREF.WATT.TEMP.data.find(r => r.PointSliceID == +id) : null;
+
   return (
     <div className="min-h-screen bg-gray-100">
       <PopupID />
@@ -96,10 +98,10 @@ export default function FeedbackPage() {
           <Button text="Close" onClick={() => router.push("/")} autoFocus />
         </div>
       </Popup>
-      <Header title="User Feedback" />
+      <Header title={room ? `${BUILDINGS[room.BLG]} RM ${room.Room}` : id} />
       <main className="p-6 max-w-5xl m-auto items-center">
         <Head>
-          <title>User Feedback</title>
+          <title>{room ? `${BUILDINGS[room.BLG]} RM ${room.Room}` : id}</title>
         </Head>
         <motion.div
           {...(participantID ? popIn : {})}
