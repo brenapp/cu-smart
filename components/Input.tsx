@@ -76,7 +76,7 @@ export function Select<T>({
   const flex = {
     row: "flex-row",
     col: "flex-col",
-    responsive: "md:flex-row",
+    responsive: "flex-col md:flex-row",
   };
 
   return (
