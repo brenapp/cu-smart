@@ -1,3 +1,9 @@
+/**
+ * @author Brendan McGuire
+ * @date 13 October 2021
+ *
+ */
+
 import React, { useEffect, useState } from "react";
 import { Header } from "@components/Header";
 import Head from "next/head";

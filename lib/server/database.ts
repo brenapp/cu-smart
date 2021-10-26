@@ -1,3 +1,10 @@
+/**
+ * @author Brendan McGuire
+ * @date 2 October 2021
+ * 
+ * Manages the connection and interface for the local feedback database.
+ */
+
 import sqlite3 from "sqlite3";
 import * as sqlite from "sqlite";
 import { getTemperature, getRelativeHumidity } from "./outside";

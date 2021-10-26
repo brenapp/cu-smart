@@ -1,3 +1,9 @@
+/**
+ * @author Brendan McGuire
+ * @date 26 September 2021
+ * 
+ * Reusable and composable animations with framer motion
+ */
 
 const popIn = {
     initial: {

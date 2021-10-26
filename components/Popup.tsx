@@ -1,3 +1,11 @@
+/**
+ * @author Brendan McGuire
+ * @date 27 September 2021
+ *
+ * Component used to surface popup messages. Note that these popups are disturbing to the user
+ * experience, and should be used sparingly.
+ **/
+
 import { motion } from "framer-motion";
 import { popIn } from "@lib/client/animations";
 

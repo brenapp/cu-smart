@@ -1,4 +1,10 @@
-import Link from "next/link";
+/**
+ * @author Brendan McGuire
+ * @date 5 October 2021
+ * 
+ * Header component with integrated back button
+ **/
+
 import router from "next/router";
 import React from "react";
 

@@ -1,3 +1,11 @@
+/**
+ * @author Brendan McGuire
+ * @date 27 September 2021
+ * 
+ * ID popup component, to prompt the user to enter their experiment ID. Eventually this will be
+ * replaced with Single Sign On integration
+ */
+
 import Popup from "../Popup";
 import { Input, Button } from "../Input";
 

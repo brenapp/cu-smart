@@ -1,3 +1,11 @@
+/**
+ * @author Brendan McGuire
+ * @date 5 October 2021
+ * 
+ * Home page, displays lists of favorites to go to, and additionally links out to suggestion page,
+ * settings pane, and building selection page
+ */
+
 import { useEffect, useState } from "react";
 import { ResponseType, BUILDINGS } from "@lib/client/data";
 import Link from "next/link";

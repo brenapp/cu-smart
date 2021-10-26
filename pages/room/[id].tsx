@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Head from "next/head";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -9,7 +8,11 @@ import Popup from "@components/Popup";
 import { Button, Select } from "@components/Input";
 import React, { useState } from "react";
 import Survey from "@components/Survey";
-import useSensorData, { BUILDINGS, Entry, ResponseType } from "@lib/client/data";
+import useSensorData, {
+  BUILDINGS,
+  Entry,
+  ResponseType,
+} from "@lib/client/data";
 
 import clothing1 from "@static/clothing/clothing1.png";
 import clothing2 from "@static/clothing/clothing2.png";
@@ -86,7 +89,9 @@ export default function FeedbackPage() {
   const [preference, setPreference] = useState<FivePointScale>(3);
   const [clothing, setClothing] = useState<FivePointScale>(1);
 
-  const room = data.XREF.WATT.TEMP.loaded ? data.XREF.WATT.TEMP.data.find(r => r.PointSliceID == +id) : null;
+  const room = data.XREF.WATT.TEMP.loaded
+    ? data.XREF.WATT.TEMP.data.find((r) => r.PointSliceID == +id)
+    : null;
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -107,6 +112,7 @@ export default function FeedbackPage() {
           {...(participantID ? popIn : {})}
           className="bg-white w-full rounded-3xl shadow-sm p-6 flex flex-col"
         >
+          
           <Survey
             submitButton={{
               before: () => (spinner ? <Spinner /> : null),

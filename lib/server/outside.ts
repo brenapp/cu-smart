@@ -1,4 +1,7 @@
 /**
+ * @author Brendan McGuire
+ * @date 15 October 2021
+ * 
  * Gets outside data, based on a nearby NWS observation station. The specific station in question is
  * https://api.weather.gov/stations/KCEU/observations/latest
  */

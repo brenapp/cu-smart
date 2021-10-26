@@ -1,3 +1,10 @@
+/**
+ * @author Brendan McGuire
+ * @date 5 October 2021
+ * 
+ * Single API to export all feedback to a single CSV file
+ */
+
 import { database, ensureSchema, UserFeedback } from "@lib/server/database";
 import { NextApiRequest, NextApiResponse } from "next";
 

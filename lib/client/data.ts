@@ -1,6 +1,10 @@
 /**
+ * @author Brendan McGuire
+ * @date 28 September 2021
+ * 
  * Store for data from the sensor data API.
  */
+
 import globalHook, { Store } from "use-global-hook";
 
 export type Building = "WATT" | "COOPER" | "ASC" | "SIKES" | "FIKE";

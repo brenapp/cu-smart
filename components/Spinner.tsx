@@ -1,3 +1,11 @@
+/**
+ * @author Brendan McGuire
+ * @date 30 September 2021
+ *
+ * Spinner component from Heroicons
+ * https://heroicons.com/
+ **/
+
 export default function Spinner() {
   return (
     <svg

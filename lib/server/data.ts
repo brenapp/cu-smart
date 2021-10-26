@@ -1,3 +1,9 @@
+/**
+ * @author Brendan McGuire
+ * @date 2 October 2021
+ * 
+ * Combines all of the disparate room information into the a single, consumable API.
+ */
 
 import mssql, { ConnectionPool } from "mssql";
 import { Building, BUILDINGS as BUILDING_NAMES, Metric, METRICS } from "../client/data";

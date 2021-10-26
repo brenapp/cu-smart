@@ -1,5 +1,11 @@
+/**
+ * @author Brendan McGuire
+ * @date 5 October 2021
+ *
+ * Experiment administration page, displays recent feedback and current room statistics
+ */
+
 import { Header } from "@components/Header";
-import { Button } from "@components/Input";
 import Spinner from "@components/Spinner";
 import { useEffect, useState } from "react";
 import useSensorData, { Entry, LoadedDataEntry } from "@lib/client/data";
