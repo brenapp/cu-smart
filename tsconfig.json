@@ -20,11 +20,17 @@
     "jsx": "preserve",
     "downlevelIteration": true,
     "paths": {
-      "@lib/*": ["lib/*"],
-      "@components/*": ["components/*"],
-      "@static/*": ["public/*"]
-
-    }
+      "@lib/*": [
+        "lib/*"
+      ],
+      "@components/*": [
+        "components/*"
+      ],
+      "@static/*": [
+        "public/*"
+      ]
+    },
+    "incremental": true
   },
   "include": [
     "next-env.d.ts",
