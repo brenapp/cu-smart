@@ -8,7 +8,7 @@
 import { Header } from "@components/Header";
 import Spinner from "@components/Spinner";
 import { useEffect, useState } from "react";
-import useSensorData, { Entry, LoadedDataEntry } from "@lib/client/data";
+import useSensorData, { Entry } from "@lib/client/data";
 import { favorites } from "@lib/client/favorites";
 import { ResponseType, BUILDINGS } from "@lib/client/data";
 
