@@ -35,4 +35,6 @@ yarn-error.log*
 # vercel
 .vercel
 
+reccomendation/models
+
 cu-smart.db
