@@ -134,3 +134,68 @@ export async function getBoxData() {
   
   return boxData;
 };
+
+export interface LiveEntry {
+  PointSliceID: string,
+  Alias: string,
+  UTCDateTime: string,
+  ETDateTime: string,
+  ActualValue: number
+}
+
+export async function getLiveData(building: Building, sensor: Metric) {
+  await ensureConnection();
+  
+  if (sensor == "HUMIDITY") {
+
+    let data: LiveEntry[] = [];
+
+    if (building == "WATT") {
+
+
+      for (const [id, box] of boxData) {
+        data.push({
+          PointSliceID: id.toString(),
+          Alias: mobileMETRICS.get(id) || "",
+          UTCDateTime: new Date().toISOString(),
+          ETDateTime: new Date().toISOString(),
+          ActualValue: box.humidity
+        });
+      }
+    };
+
+    return data;
+  };
+
+    // Safety: While tagged templates are not being used here, because we are validating the
+    // values of building and sensor to a set of known, constant values, it is ok to
+    // directly substitute here
+    const result = await thermostatData.query<LiveEntry>(`SELECT * FROM [WFIC-CEVAC].[dbo].[CEVAC_${building}_${sensor}_LIVE]`);
+
+    const record = result.recordsets[0];
+    let data = [...record];
+
+    // Artificially insert RM 327 in WATT TEMP
+    if (sensor == "TEMP" && building == "WATT") {
+      record.push({
+        "PointSliceID": "8939",
+        "Alias": "RM 327",
+        "UTCDateTime": new Date().toISOString(),
+        "ETDateTime": new Date().toISOString(),
+        "ActualValue": 0
+      });
+
+
+      // Insert box data if it exists
+      data = [...record].map(room => {
+        if (boxData.has(+room.PointSliceID)) {
+          room.ActualValue = boxData.get(+room.PointSliceID)?.temp as number;
+        }
+
+        return room;
+      });
+
+    };
+
+    return data;
+};
