@@ -145,13 +145,13 @@ export interface LiveEntry {
 
 export async function getLiveData(building: Building, sensor: Metric) {
   await ensureConnection();
+  await getBoxData();
   
   if (sensor == "HUMIDITY") {
 
     let data: LiveEntry[] = [];
 
     if (building == "WATT") {
-
 
       for (const [id, box] of boxData) {
         data.push({

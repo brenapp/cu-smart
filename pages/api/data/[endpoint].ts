@@ -14,7 +14,7 @@ import { getBoxData, ensureConnection, BUILDINGS, mobileMETRICS, thermostatData,
 async function live(req: NextApiRequest, res: NextApiResponse) {
   const { building, sensor } = req.query;
 
-  const boxData = await getBoxData();
+  await getBoxData();
   if (typeof building != "string" || typeof sensor != "string" || !BUILDINGS.includes(building as Building) || !METRICS.includes(sensor as Metric)) {
     res.status(400).json({
       "status": "err",
@@ -53,14 +53,11 @@ async function live(req: NextApiRequest, res: NextApiResponse) {
 
 };
 
-
 /// Endpoint: hist
-
 interface HistoricalEntry {
   Time: Date;
   Value: number;
 }
-
 
 function calculateAvgValue(recordList: HistoricalEntry[]) {
   let newList: Record<number, number[]> = {};
