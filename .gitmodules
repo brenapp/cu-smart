@@ -1,0 +1,3 @@
+[submodule "thermal"]
+	path = thermal
+	url = git@github.com:rohitsaikiran91/Thermal_Comfort_Prediction.git
