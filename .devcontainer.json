@@ -1,0 +1,5 @@
+{
+    "image": "bmmcgui/cu-smart",
+    "forwardPorts": [3000],
+    "extensions": []
+  }
