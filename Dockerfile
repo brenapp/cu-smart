@@ -38,7 +38,7 @@ RUN apt-get update -y && apt-get update \
   && apt-get install -y --no-install-recommends curl gcc g++ gnupg unixodbc-dev nodejs
 
 # Python Dependencies
-COPY requirements.txt .
+COPY thermal/requirements.txt .
 RUN python3 -m pip install --upgrade pip
 RUN python3 -m pip install -r requirements.txt
 
