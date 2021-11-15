@@ -1,0 +1,1 @@
+docker run -p 3000:3000 -d --mount source=cu-smart-feedback,target=//data --restart always bmmcgui/cu-smart

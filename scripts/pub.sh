@@ -1,0 +1,1 @@
+docker push bmmcgui/cu-smart
