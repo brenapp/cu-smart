@@ -20,6 +20,7 @@ const images = [clothing1, clothing2];
 import { favorites } from "@lib/client/favorites";
 import Spinner from "@components/Spinner";
 import PopupID from "@components/popup/id";
+import Link from "next/link";
 
 export default function Suggest() {
   const [clothing, setClothing] = useState(-1);
@@ -109,51 +110,55 @@ export default function Suggest() {
               Your Suggested Rooms
             </h1>
             {items.map((item, index) => (
-              <motion.div
-                key={item}
-                layout
-                initial="false"
-                transition={{ type: "spring", stiffness: 350, damping: 25 }}
-                className="rounded-3xl bg-white shadow-md px-6 py-6 mb-6 flex items-center hover:shadow-xl transition-shadow cursor-pointer"
-              >
-                <div className="rounded-lg mr-6 overflow-hidden flex items-center">
-                  <h1 className="text-xl text-orange">#{index + 1}</h1>
-                </div>
-                <div className="h-12 w-12 bg-gray-500 rounded-lg mr-6 overflow-hidden">
-                  <img
-                    src={`/buildings/${favorites[item].BLG}.png`}
-                    alt={BUILDINGS[favorites[item].BLG]}
-                    className="h-full rounded-lg max-w-max"
-                  />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-lg flex items-center">
-                    {favorites[item].Alias}
-                    <span className="text-orange ml-2 text-sm">
-                      (
-                      {(fitness[favorites[item].PointSliceID] * 100).toFixed(2)}
-                      % Match)
-                    </span>
-                  </h3>
-                  <h5 className="text-base text-gray-500">
-                    {BUILDINGS[favorites[item].BLG]}
-                  </h5>
-                </div>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 mr-4 text-orange"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+              <Link key={item} href={`/room/${favorites[item].PointSliceID}`}>
+                <motion.div
+                  key={item}
+                  layout
+                  initial="false"
+                  transition={{ type: "spring", stiffness: 350, damping: 25 }}
+                  className="rounded-3xl bg-white shadow-md px-6 py-6 mb-6 flex items-center hover:shadow-xl transition-shadow cursor-pointer"
                 >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                  />
-                </svg>
-              </motion.div>
+                  <div className="rounded-lg mr-6 overflow-hidden flex items-center">
+                    <h1 className="text-xl text-orange">#{index + 1}</h1>
+                  </div>
+                  <div className="h-12 w-12 bg-gray-500 rounded-lg mr-6 overflow-hidden">
+                    <img
+                      src={`/buildings/${favorites[item].BLG}.png`}
+                      alt={BUILDINGS[favorites[item].BLG]}
+                      className="h-full rounded-lg max-w-max"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-lg flex items-center">
+                      {favorites[item].Alias}
+                      <span className="text-orange ml-2 text-sm">
+                        (
+                        {(fitness[favorites[item].PointSliceID] * 100).toFixed(
+                          2
+                        )}
+                        % Match)
+                      </span>
+                    </h3>
+                    <h5 className="text-base text-gray-500">
+                      {BUILDINGS[favorites[item].BLG]}
+                    </h5>
+                  </div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6 mr-4 text-orange"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M17 8l4 4m0 0l-4 4m4-4H3"
+                    />
+                  </svg>
+                </motion.div>
+              </Link>
             ))}
           </div>
         )}
