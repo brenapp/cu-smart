@@ -7,7 +7,8 @@
 
 import mssql, { ConnectionPool } from "mssql";
 import { Building, BUILDINGS as BUILDING_NAMES, Metric, METRICS } from "../client/data";
-import type { NextApiRequest, NextApiResponse } from "next";
+import { config } from "dotenv"
+config();
 
 export const BUILDINGS = Object.keys(BUILDING_NAMES);
 
@@ -146,6 +147,8 @@ export interface LiveEntry {
 export async function getLiveData(building: Building, sensor: Metric) {
   await ensureConnection();
   await getBoxData();
+
+  console.log(process.env);
   
   if (sensor == "HUMIDITY") {
 
