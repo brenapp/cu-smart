@@ -41,6 +41,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     
     // python main.py predict user_id place_id clothing_level indoor_temp indoor_humidity
     // outdoor_temp outdoor_humidity created_at
-    
+    res.setHeader("Content-Type", "application/json")
+        .setHeader("Cache-Control", "maxage=60");
     res.status(200).end(JSON.stringify(resp));
 };
