@@ -1,0 +1,19 @@
+{
+    "sqltools.connections": [
+        {
+            "mssqlOptions": {
+                "appName": "SQLTools",
+                "useUTC": true,
+                "encrypt": false
+            },
+            "previewLimit": 50,
+            "server": "wfic-util-sql.campus.cu.clemson.edu",
+            "port": 1433,
+            "askForPassword": true,
+            "driver": "MSSQL",
+            "name": "Shades",
+            "database": "WFIC_CEVAC_Shades",
+            "username": "shades_write"
+        }
+    ]
+}
